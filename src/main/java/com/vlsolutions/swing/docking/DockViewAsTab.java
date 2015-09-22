@@ -410,7 +410,7 @@ public class DockViewAsTab extends DockView implements SingleDockableContainer {
 	}
 
 	public void resetTabIcons() {
-		ArrayList icons = new ArrayList();
+		ArrayList<SmartIconJButton> icons = new ArrayList<SmartIconJButton>();
 		DockKey k = getDockable().getDockKey();
 		if(k.isCloseEnabled() && isCloseButtonDisplayed) {
 			icons.add(closeSmartIcon);
@@ -429,7 +429,7 @@ public class DockViewAsTab extends DockView implements SingleDockableContainer {
 		// currently, only "close" is managed, but other buttons could be added, as
 		// the jTabebdPaneSmartIcon supports(simulates) many sub-buttons.
 		if(icons.size() > 0) {
-			SmartIconJButton[] iconsArray = (SmartIconJButton[]) icons.toArray(new SmartIconJButton[0]);
+			SmartIconJButton[] iconsArray = icons.toArray(new SmartIconJButton[icons.size()]);
 			smartIcon = new JTabbedPaneSmartIcon(k.getIcon(), k.getName(), iconsArray);
 			smartIcon.setIconForTabbedPane(tabHeader);
 			tabHeader.addTab("", smartIcon, getDockable().getComponent());
