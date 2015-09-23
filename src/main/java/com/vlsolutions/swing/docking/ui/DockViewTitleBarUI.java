@@ -298,7 +298,7 @@ public class DockViewTitleBarUI extends PanelUI implements PropertyChangeListene
 				newDockable.getDockKey().addPropertyChangeListener(this);
 			}
 		} else if(pName.equals(DockKey.PROPERTY_AUTOHIDEABLE)) {
-			boolean isAutoHideable = ((Boolean) e.getNewValue()).booleanValue();
+			boolean isAutoHideable = (Boolean) e.getNewValue();
 			boolean isMaximized = titleBar.getDockable().getDockKey().getLocation() == DockableState.Location.MAXIMIZED;
 			if(isAutoHideable) {
 				if(! isMaximized) {
@@ -309,7 +309,7 @@ public class DockViewTitleBarUI extends PanelUI implements PropertyChangeListene
 				titleBar.getHideOrDockButton().setVisible(false);
 			}
 		} else if(pName.equals(DockKey.PROPERTY_MAXIMIZABLE)) {
-			boolean isMaximizeable = ((Boolean) e.getNewValue()).booleanValue();
+			boolean isMaximizeable = (Boolean) e.getNewValue();
 			boolean isHidden = titleBar.getDockable().getDockKey().getLocation() == DockableState.Location.HIDDEN;
 			if(isMaximizeable) {
 				if(! isHidden) {
@@ -320,7 +320,7 @@ public class DockViewTitleBarUI extends PanelUI implements PropertyChangeListene
 				titleBar.getMaximizeOrRestoreButton().setVisible(false);
 			}
 		} else if(pName.equals(DockKey.PROPERTY_CLOSEABLE)) {
-			boolean isCloseable = ((Boolean) e.getNewValue()).booleanValue();
+			boolean isCloseable = (Boolean) e.getNewValue();
 			boolean isMaximized = titleBar.getDockable().getDockKey().getLocation() == DockableState.Location.MAXIMIZED;
 			if(isCloseable) {
 				if(! isMaximized) {
@@ -331,7 +331,7 @@ public class DockViewTitleBarUI extends PanelUI implements PropertyChangeListene
 				titleBar.getCloseButton().setVisible(false);
 			}
 		} else if(pName.equals(DockKey.PROPERTY_FLOATABLE)) {
-			boolean isFloatable = ((Boolean) e.getNewValue()).booleanValue();
+			boolean isFloatable = (Boolean) e.getNewValue();
 			boolean isMaximized = titleBar.getDockable().getDockKey().getLocation() == DockableState.Location.MAXIMIZED;
 			if(isFloatable) {
 				if(! isMaximized) {
@@ -344,7 +344,7 @@ public class DockViewTitleBarUI extends PanelUI implements PropertyChangeListene
 		} else if(pName.equals(DockKey.PROPERTY_DOCKABLE_STATE)) {
 			configureButtons(titleBar);
 		} else if(pName.equals("active")) {
-			boolean isActive = ((Boolean) e.getNewValue()).booleanValue();
+			boolean isActive = (Boolean) e.getNewValue();
 			if(isActive) {
 				titleBar.getTitleLabel().setForeground(selectedTextColor);
 				titleBar.setBackground(selectedTitleColor);
@@ -354,7 +354,7 @@ public class DockViewTitleBarUI extends PanelUI implements PropertyChangeListene
 			}
 			titleBar.repaint();
 		} else if(pName.equals("titlebar.notification")) {
-			boolean notification = ((Boolean) e.getNewValue()).booleanValue();
+			boolean notification = (Boolean) e.getNewValue();
 			if(notification) {
 				titleBar.setBackground(UIManager.getColor("DockingDesktop.notificationColor"));
 				titleBar.setOpaque(true);
