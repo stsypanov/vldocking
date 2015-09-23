@@ -132,12 +132,15 @@ public class DockViewTitleBarUI extends PanelUI implements PropertyChangeListene
 	 */
 	private AncestorListener ancestorListener = new AncestorListener() {
 
+		@Override
 		public void ancestorAdded(AncestorEvent event) {
 			configureButtons(titleBar);
 		}
 
+		@Override
 		public void ancestorMoved(AncestorEvent event) {}
 
+		@Override
 		public void ancestorRemoved(AncestorEvent event) {}
 	};
 
@@ -149,6 +152,7 @@ public class DockViewTitleBarUI extends PanelUI implements PropertyChangeListene
 		return new DockViewTitleBarUI((DockViewTitleBar) c);
 	}
 
+	@Override
 	public void installUI(JComponent c) {
 		super.installUI(c);
 		installTitleBorder(c);
@@ -192,6 +196,7 @@ public class DockViewTitleBarUI extends PanelUI implements PropertyChangeListene
 
 	}
 
+	@Override
 	public void uninstallUI(JComponent c) {
 		super.uninstallUI(c);
 		uninstallTitleBorder(c);
@@ -262,9 +267,23 @@ public class DockViewTitleBarUI extends PanelUI implements PropertyChangeListene
 		floatButton.setFocusable(false);
 		floatButton.setContentAreaFilled(false);
 
+		if (UIManager.getBoolean("DockViewTitleBar.useTransparentButtonsInHeader")) {
+			dockButton.setOpaque(false);
+			dockButton.setBorder(null);
+
+			closeButton.setOpaque(false);
+			closeButton.setBorder(null);
+
+			maximizeButton.setOpaque(false);
+			maximizeButton.setBorder(null);
+
+			floatButton.setOpaque(false);
+			floatButton.setBorder(null);
+		}
 	}
 
 	/** Listen to property changes in the DockKey or the title bar  */
+	@Override
 	public void propertyChange(PropertyChangeEvent e) {
 		String pName = e.getPropertyName();
 		//System.out.println("property change " + pName);
@@ -552,15 +571,18 @@ public class DockViewTitleBarUI extends PanelUI implements PropertyChangeListene
 	/**  Custom title bar painting : uses a gradient from the background color
 	 * to the control highlight color.
 	 */
+	@Override
 	public void paint(Graphics g, JComponent c) {
 
-		DockViewTitleBar tb = (DockViewTitleBar) c;
-		if(useCustomPaint) {
+		boolean useGradientInHeader = UIManager.getBoolean("DockViewTitleBar.useGradientInHeader");
+
+		if (useGradientInHeader && useCustomPaint) {
+			DockViewTitleBar tb = (DockViewTitleBar) c;
 			Graphics2D g2 = (Graphics2D) g.create();
 			g2.setColor(panelColor);
 			g2.fillRect(0, 0, tb.getWidth(), tb.getHeight()); // emptyborder doesn't repaint
-			
-			//TODO: Optimize Look and Feel specific color selecting 
+
+			//TODO: Optimize Look and Feel specific color selecting
 			Insets i = tb.getInsets();
 			if(tb.isActive()) {
 				if(UIManager.getLookAndFeel().getName().contains("Substance")) {
@@ -585,7 +607,7 @@ public class DockViewTitleBarUI extends PanelUI implements PropertyChangeListene
 				g2.setPaint(new GradientPaint(i.left + w, 0, UIManager.getColor("Panel.background"), tb.getWidth(), 0, UIManager.getColor("controlHighlight"))); //panelColor));
 			}
 			g2.fillRect(i.left + w, i.top, tb.getWidth() - w - i.left - i.right, tb.getHeight() - i.top - i.bottom);
-			
+
 			g2.dispose();
 		}
 		super.paint(g, c);
