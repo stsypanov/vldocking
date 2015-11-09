@@ -62,7 +62,7 @@ import javax.swing.plaf.PanelUI;
 public class DockViewTitleBarUI extends PanelUI implements PropertyChangeListener {
 
 	/* hack to use custom painting except on mac os (ugly opacity effects)  */
-	private static boolean useCustomPaint = System.getProperty("os.name").toLowerCase().indexOf("mac os") < 0;
+	private static boolean useCustomPaint = !System.getProperty("os.name").toLowerCase().contains("mac os");
 
 	private static Color panelColor = UIManager.getColor("Panel.background");
 	@SuppressWarnings("unused")
@@ -492,83 +492,80 @@ public class DockViewTitleBarUI extends PanelUI implements PropertyChangeListene
 
 	}
 
-	/** installs the icons and tooltip suitable for a close button */
+	/**
+	 * installs the icons and tooltip suitable for a close button
+	 */
 	protected void configureCloseButton(JButton btn) {
-		btn.setIcon(closeIcon);
-		btn.setRolloverIcon(closeIconRollover);
-		btn.setPressedIcon(closeIconPressed);
-		btn.setRolloverSelectedIcon(closeIconRollover);
-		btn.setToolTipText(CLOSE_TEXT);
+		configureButton(btn, closeIcon, closeIconRollover, closeIconPressed, closeIconRollover, CLOSE_TEXT);
 	}
 
-	/** installs the icons and tooltip suitable for a maximize button */
+	/**
+	 * installs the icons and tooltip suitable for a maximize button
+	 */
 	protected void configureMaximizeButton(JButton btn) {
-		btn.setIcon(maximizeIcon);
-		btn.setRolloverIcon(maximizeIconRollover);
-		btn.setPressedIcon(maximizeIconPressed);
-		btn.setRolloverSelectedIcon(maximizeIconRollover);
-		btn.setToolTipText(MAXIMIZE_TEXT);
+		configureButton(btn, maximizeIcon, maximizeIconRollover, maximizeIconPressed, maximizeIconRollover, MAXIMIZE_TEXT);
 	}
 
-	/** installs the icons and tooltip suitable for a restore button.
+	/**
+	 * installs the icons and tooltip suitable for a restore button.
 	 */
 	protected void configureRestoreButton(JButton btn) {
-		btn.setIcon(restoreIcon);
-		btn.setRolloverIcon(restoreIconRollover);
-		btn.setPressedIcon(restoreIconPressed);
-		btn.setRolloverSelectedIcon(restoreIconRollover);
-		btn.setToolTipText(RESTORE_TEXT);
+		configureButton(btn, restoreIcon, restoreIconRollover, restoreIconPressed, restoreIconRollover, RESTORE_TEXT);
 	}
 
-	/** installs the icons and tooltip suitable for a hide button */
+	/**
+	 * installs the icons and tooltip suitable for a hide button
+	 */
 	protected void configureHideButton(JButton btn) {
-		btn.setIcon(hideIcon);
-		btn.setRolloverIcon(hideIconRollover);
-		btn.setPressedIcon(hideIconPressed);
-		btn.setRolloverSelectedIcon(hideIconRollover);
-		btn.setToolTipText(ICONIFY_TEXT);
+		configureButton(btn, hideIcon, hideIconRollover, hideIconPressed, hideIconRollover, ICONIFY_TEXT);
 	}
 
-	/** installs the icons and tooltip suitable for a dock button */
+	/**
+	 * installs the icons and tooltip suitable for a dock button
+	 */
 	protected void configureDockButton(JButton btn) {
-		btn.setIcon(dockIcon);
-		btn.setRolloverIcon(dockIconRollover);
-		btn.setPressedIcon(dockIconPressed);
-		btn.setRolloverSelectedIcon(dockIconRollover);
-		btn.setToolTipText(RESTORE_TEXT);
+		configureButton(btn, dockIcon, dockIconRollover, dockIconPressed, dockIconRollover, RESTORE_TEXT);
 	}
 
-	/** installs the icons and tooltip suitable for a float button */
+	/**
+	 * installs the icons and tooltip suitable for a float button
+	 */
 	protected void configureFloatButton(JButton btn) {
-		btn.setIcon(floatIcon);
-		btn.setRolloverIcon(floatIconRollover);
-		btn.setPressedIcon(floatIconPressed);
-		btn.setRolloverSelectedIcon(floatIconRollover);
-		btn.setToolTipText(FLOAT_TEXT);
+		configureButton(btn, floatIcon, floatIconRollover, floatIconPressed, floatIconRollover, FLOAT_TEXT);
 	}
 
-	/** installs the icons and tooltip suitable for an attach button */
+	/**
+	 * installs the icons and tooltip suitable for an attach button
+	 */
 	protected void configureAttachButton(JButton btn) {
-		btn.setIcon(attachIcon);
-		btn.setRolloverIcon(attachIconRollover);
-		btn.setPressedIcon(attachIconPressed);
-		btn.setRolloverSelectedIcon(attachIconRollover);
-		btn.setToolTipText(ATTACH_TEXT);
+		configureButton(btn, attachIcon, attachIconRollover, attachIconPressed, attachIconRollover, ATTACH_TEXT);
 	}
 
-	/** installs the border of the title bar */
+	protected void configureButton(JButton button, Icon defaultIcon, Icon rolloverIcon, Icon pressedIcon, Icon rolloverSelectedIcon, String tooltipText){
+		button.setIcon(defaultIcon);
+		button.setRolloverIcon(rolloverIcon);
+		button.setPressedIcon(pressedIcon);
+		button.setRolloverSelectedIcon(rolloverSelectedIcon);
+		button.setToolTipText(tooltipText);
+	}
+
+	/**
+	 * installs the border of the title bar
+	 */
 	protected void installTitleBorder(JComponent c) {
 		Border b = UIManager.getBorder("DockViewTitleBar.border");
 		c.setBorder(b);
-
 	}
 
-	/** uninstalls the icons and tooltip suitable for a close button */
+	/**
+	 * uninstalls the icons and tooltip suitable for a close button
+	 */
 	protected void uninstallTitleBorder(JComponent c) {
 		c.setBorder(null);
 	}
 
-	/**  Custom title bar painting : uses a gradient from the background color
+	/**
+	 * Custom title bar painting : uses a gradient from the background color
 	 * to the control highlight color.
 	 */
 	@Override
